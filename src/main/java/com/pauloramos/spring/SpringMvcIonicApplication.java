@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.pauloramos.spring.domain.Categoria;
 import com.pauloramos.spring.domain.Cidade;
+import com.pauloramos.spring.domain.Cliente;
+import com.pauloramos.spring.domain.Endereco;
 import com.pauloramos.spring.domain.Estado;
 import com.pauloramos.spring.domain.Produto;
+import com.pauloramos.spring.domain.enums.TipoCliente;
 import com.pauloramos.spring.repositores.CategoriaRepositorio;
 import com.pauloramos.spring.repositores.CidadeRepositorio;
+import com.pauloramos.spring.repositores.ClienteRepositorio;
+import com.pauloramos.spring.repositores.EnderecoRepositorio;
 import com.pauloramos.spring.repositores.EstadoRepositorio;
 import com.pauloramos.spring.repositores.ProdutoRepositorio;
 
@@ -30,8 +35,11 @@ public class SpringMvcIonicApplication implements CommandLineRunner {
 	
 	@Autowired
 	public CidadeRepositorio cidadeRepositorio;
+	@Autowired
+	public ClienteRepositorio clienteRepositorio;
 	
-	
+	@Autowired
+	public EnderecoRepositorio enderecoRepositorio;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMvcIonicApplication.class, args);
@@ -70,5 +78,15 @@ public class SpringMvcIonicApplication implements CommandLineRunner {
 				
 		estadoRepositorio.save(Arrays.asList(est1,est2));
 		cidadeRepositorio.save(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null,"Paulo Cesar Ramos","pauloramos@gmail.com","2778402258",TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("25258974","557896354"));
+		
+		Endereco e1 = new Endereco(null,"Rua francisco de Paula","193","Bloco 29 apto 04","Jardim odete","07144001",cli1,c1);
+		Endereco e2 = new Endereco(null,"Rua  Paula","13","Bloco  apto 1","Jardim pamares","07144001",cli1,c2);
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepositorio.save(Arrays.asList(cli1));
+		enderecoRepositorio.save(Arrays.asList(e1,e2));
 	}
 }
