@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pauloramos.spring.domain.enums.TipoCliente;
 
 @Entity
@@ -28,27 +29,30 @@ public class Cliente implements Serializable{
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-	private Integer tipoCliente;	
+	private Integer tipo;	
 	
+	
+	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
-	
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String>telefones = new HashSet<>();
 	
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	private Cliente() {
 		
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipoCliente = tipoCliente.getCod();
+		this.tipo = tipo.getCod();
 	}
 
 	public Integer getId() {
@@ -84,11 +88,11 @@ public class Cliente implements Serializable{
 	}
 
 	public TipoCliente getTipoCliente() {
-		return TipoCliente.toEnum(tipoCliente);
+		return TipoCliente.toEnum(tipo);
 	}
 
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente.getCod();
+	public void setTipoCliente(TipoCliente tipo) {
+		this.tipo= tipo.getCod();
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -106,6 +110,14 @@ public class Cliente implements Serializable{
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -131,5 +143,6 @@ public class Cliente implements Serializable{
 			return false;
 		return true;
 	}
+
 	
 }
