@@ -2,8 +2,11 @@ package com.pauloramos.spring.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import com.pauloramos.spring.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	private Date dataVencimento;

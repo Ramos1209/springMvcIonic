@@ -1,7 +1,11 @@
 package com.pauloramos.spring.domain;
 
+import javax.persistence.Entity;
+
 import com.pauloramos.spring.domain.enums.EstadoPagamento;
 
+
+@Entity
 public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
